@@ -1,0 +1,59 @@
+﻿@model CVGS_Main.Models.View_Models.CvgsCartViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Your Cart</h1>
+
+
+@if (Model.LineItems.Count == 0)
+{
+    <p>No items in the cart, lets add some <a asp-action="Index" asp-controller="Store">Back to store!</a></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Item ID
+                </th>
+                <th>
+                    Game ID
+                </th>
+                <th>
+                    Cart ID
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (var item in Model.LineItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LineItemId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GameId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CartId)
+                    </td>
+                    <td>
+                        <a asp-action="DeleteLineItem" asp-route-id="@item.LineItemId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+

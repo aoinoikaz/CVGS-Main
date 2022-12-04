@@ -1,0 +1,123 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container">
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <h2 class="text-center">Register new account</h2>
+        <hr />
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+      
+            <div class="progress" id="progress"> </div>
+      
+            <div class="progress-bar-step progress-bar-step-active" data-title="Basics"></div>
+            <div class="progress-bar-step" data-title="Address"></div>
+            <div class="progress-bar-step" data-title="Credentials"></div>
+    
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+        <!-- First step -->
+        <div class ="form-step form-step-active" id="firstStep">
+            <div class="form-floating">
+                <input asp-for="Input.FirstName" class="form-control" autocomplete="firstname" aria-required="true" />
+                <label asp-for="Input.FirstName"></label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Input.LastName" class="form-control" autocomplete="lastname" aria-required="true" />
+                <label asp-for="Input.LastName"></label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Input.Gender" class="form-control" autocomplete="gender" aria-required="true" />
+                <label asp-for="Input.Gender"></label>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+
+             <div class="form-floating">
+                <input asp-for="Input.DateOfBirth" class="form-control" autocomplete="dob" aria-required="true" />
+                <label asp-for="Input.DateOfBirth"></label>
+                <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <!-- Next btn -->
+            <button type="button" class="btn btn-primary registerFormNextBtns m-auto" id="adv-ws-step1-btn-next">Next</button>
+        </div>
+    
+    
+        <!-- Second step -->
+        <div class ="form-step" id="secondStep">
+            <div class="form-floating">
+                <input asp-for="Input.MailingAddress" class="form-control" autocomplete="mailingaddress" />
+                <label asp-for="Input.MailingAddress"></label>
+                <span asp-validation-for="Input.MailingAddress" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Input.ShippingAddress" class="form-control" autocomplete="streetnumber" />
+                <label asp-for="Input.ShippingAddress"></label>
+                <span asp-validation-for="Input.ShippingAddress" class="text-danger"></span>
+            </div>
+
+            <div class="adv-ws-btn-group m-auto">
+                <button type="button" class="btn btn-secondary registerFormPreviousBtns">Previous</button>
+                <button type="button" class="btn btn-primary registerFormNextBtns" id="adv-ws-step2-btn-next">Next</button>
+            </div>
+      
+        </div>
+
+        <!-- Third Step -->
+    
+        <div class ="form-step" id="thirdStep">
+            <div class="form-floating">
+                <input asp-for="Input.Username" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Username"></label>
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Email"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input type="checkbox" asp-for="Input.ReceivePromotion" value="true" aria-required="true" checked/>
+                Receive Promotions?
+            </div><br />
+
+            <!--
+            <div class="form-floating">
+                <p>@ViewData["CaptchaError"]</p>
+            </div>-->
+            
+            <button type="button" class="btn btn-secondary registerFormPreviousBtns m-auto">Previous</button>
+            <button id="registerSubmit" class="btn btn-primary m-auto" type="submit">Submit</button>
+
+        </div>
+            
+    </form>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

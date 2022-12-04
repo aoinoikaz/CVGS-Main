@@ -1,0 +1,86 @@
+﻿@page
+@model PaymentMethodsModel
+@{
+    ViewData["Title"] = "Payment Methods";
+    ViewData["ActivePage"] = ManageNavPages.PaymentMethods;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="paymentmethods" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-floating">
+                <input asp-for="Input.NameOnCard" class="form-control" autocomplete="nameoncard" aria-required="true" />
+                <label asp-for="Input.NameOnCard" class="form-label"></label>
+                <span asp-validation-for="Input.NameOnCard" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.CardNumber" class="form-control" autocomplete="cardnumber" aria-required="true" />
+                <label asp-for="Input.CardNumber" class="form-label"></label>
+                <span asp-validation-for="Input.CardNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.SecurityCode" class="form-control" autocomplete="securitycode" aria-required="true" />
+                <label asp-for="Input.SecurityCode" class="form-label"></label>
+                <span asp-validation-for="Input.SecurityCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
+                <input asp-for="Input.ExpiryDate" class="form-control" autocomplete="expirydate" aria-required="true" />
+                <label asp-for="Input.ExpiryDate" class="form-label"></label>
+                <span asp-validation-for="Input.ExpiryDate" class="text-danger"></span>
+            </div>
+            
+            <button type="submit" class="w-100 btn btn-lg btn-primary">Add Payment Method</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <table>
+            <tr>
+                <th>
+                    Name on card
+                </th>
+
+                <th>
+                    Card Number
+                </th>
+
+                <th>
+                    Security Code
+                </th>
+
+                <th>
+                    Expiry
+                </th>
+            </tr>
+            @foreach (var method in Model.Input.PaymentMethods)
+            {
+                <tr>
+                    <td>
+                        @method.NameOnCard
+                    </td>
+
+                    <td>
+                        @method.CardNumber
+                    </td>
+
+                    <td>
+                        @method.SecurityCode
+                    </td>
+
+                    <td>
+                        @method.ExpiryDate
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

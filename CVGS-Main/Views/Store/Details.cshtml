@@ -1,0 +1,105 @@
+﻿@model CVGS_Main.Models.View_Models.CvgsGameReviewViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>@Model.Game.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.ReleaseDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.ReleaseDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.Publisher)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.Publisher.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.Developer)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.Developer.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.Genre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.Genre.Type)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Game.OverallScore)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Game.OverallScore)
+        </dd>
+    </dl>
+
+    <hr />
+    <h4>Reviews</h4>
+
+    <div class="row">
+
+        @if (Model.Reviews.Count < 1)
+        {
+            <p>No reviews yet!</p>
+        }
+        else
+        {
+            foreach (var review in Model.Reviews)
+            {
+                if (review.IsApproved)
+                {
+                    <div class="col-sm-10">
+                        @review.Description
+                    </div>
+                    <div class="col-sm-2 alert-success">
+                        Accepted!
+                    </div>
+                }
+                else
+                {
+                    <div class="col-sm-10">
+                        @review.Description
+                    </div>
+                    <div class="col-sm-2 alert-warning">
+                        Pending!
+                    </div>
+                }
+            }
+        }
+      
+        <!--
+        <dd class="col-sm-10">
+        </dd>
+        <dt class="col-sm-2">
+        </dt>
+        <dd class="col-sm-10">
+        </dd>-->
+    </div>
+    
+</div>
+
+<hr />
+
+<div>
+    <a asp-action="Index">Back to List</a>
+    <a asp-action="Create" asp-controller="WishlistItems" asp-route-id="@Model.Game.GameId">Add to Wishlist</a>
+    <a asp-action="Rate" asp-controller="Store" asp-route-id="@Model.Game.GameId">Like Game</a>
+    <a asp-action="Create" asp-controller="Review" asp-route-id="@Model.Game.GameId">Add Review</a>
+
+</div>

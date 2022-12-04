@@ -1,0 +1,161 @@
+﻿@model CVGS_Main.Models.View_Models.CvgsAdminContainerViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Admin Panel</h1>
+
+<p>
+    Welcome back, @User.Identity.Name. Logged into a secure session: @DateTime.Now.ToLocalTime()
+</p><hr />
+
+<a asp-action="Create">Add new Game</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Release Date
+            </th>
+            <th>
+                Publisher
+            </th>
+
+            <th>
+                Developer
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Upvotes
+            </th>
+            <th>
+                Modify
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model.Games) 
+        {
+            <tr>
+                <td>
+                    @game.Name
+                </td>
+
+                <td>
+                    @game.ReleaseDate
+                </td>
+
+                <td>
+                    @game.Publisher.Name
+                </td>
+
+                <td>
+                    @game.Developer.Name
+                </td>
+
+                <td>
+                    @game.Genre.Type
+                </td>
+
+                <td>
+                    @game.OverallScore
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@game.GameId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@game.GameId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@game.GameId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+<a asp-controller="Event" asp-action="Create">Add new Event</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Scheduled Time
+            </th>
+            <th>
+                Modify
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evt in Model.Events)
+        {
+            <tr>
+                <td>
+                    @evt.Name
+                </td>
+
+                <td>
+                    @evt.Description
+                </td>
+
+                <td>
+                    @evt.ScheduledTime
+                </td>
+
+                <td>
+                    <a asp-controller="Event" asp-action="Edit" asp-route-id="@evt.EventId">Edit</a> |
+                    <a asp-controller="Event" asp-action="Details" asp-route-id="@evt.EventId">Details</a> |
+                    <a asp-controller="Event" asp-action="Delete" asp-route-id="@evt.EventId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table><br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Review Id
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var review in Model.Reviews)
+        {
+            <tr>
+                <td>
+                    @review.ReviewId
+                </td>
+
+                <td>
+                    @review.Description
+                </td>
+               
+                <td>
+                    @if (!review.IsApproved)
+                    {
+                        <a asp-controller="Review" asp-action="ApproveReview" asp-route-id="@review.ReviewId">Approve</a>
+                    }
+                </td>
+            </tr>            
+        }
+    </tbody>
+</table>
