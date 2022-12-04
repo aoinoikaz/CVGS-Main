@@ -111,89 +111,24 @@ namespace CVGS_Main.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: FriendList/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FriendListId,UserId")] CvgsFriendList cvgsFriendList)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(cvgsFriendList);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cvgsFriendList);
-        }
-
-        // GET: FriendList/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.CvgsFriendList == null)
-            {
-                return NotFound();
-            }
-
-            var cvgsFriendList = await _context.CvgsFriendList.FindAsync(id);
-            if (cvgsFriendList == null)
-            {
-                return NotFound();
-            }
-            return View(cvgsFriendList);
-        }
-
-        // POST: FriendList/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FriendListId,UserId")] CvgsFriendList cvgsFriendList)
-        {
-            if (id != cvgsFriendList.FriendListId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(cvgsFriendList);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CvgsFriendListExists(cvgsFriendList.FriendListId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cvgsFriendList);
-        }
 
         // GET: FriendList/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.CvgsFriendList == null)
+            if (id == null || _context.CvgsFriends == null)
             {
                 return NotFound();
             }
 
-            var cvgsFriendList = await _context.CvgsFriendList
-                .FirstOrDefaultAsync(m => m.FriendListId == id);
-            if (cvgsFriendList == null)
+            var friendToDelete = await _context.CvgsFriends
+                .FirstOrDefaultAsync(m => m.FriendId == id);
+
+            if (friendToDelete == null)
             {
                 return NotFound();
             }
 
-            return View(cvgsFriendList);
+            return View(friendToDelete);
         }
 
         // POST: FriendList/Delete/5
@@ -201,14 +136,14 @@ namespace CVGS_Main.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.CvgsFriendList == null)
+            if (_context.CvgsFriends == null)
             {
                 return Problem("Entity set 'CvgsDbContext.CvgsFriendList'  is null.");
             }
-            var cvgsFriendList = await _context.CvgsFriendList.FindAsync(id);
-            if (cvgsFriendList != null)
+            var friend = await _context.CvgsFriends.FindAsync(id);
+            if (friend != null)
             {
-                _context.CvgsFriendList.Remove(cvgsFriendList);
+                _context.CvgsFriends.Remove(friend);
             }
             
             await _context.SaveChangesAsync();

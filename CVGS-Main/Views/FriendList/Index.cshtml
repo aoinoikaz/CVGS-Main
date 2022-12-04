@@ -26,9 +26,8 @@
                 @Html.DisplayFor(modelItem => item.FriendToAdd)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FriendListId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FriendListId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FriendListId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.FriendId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FriendId">Delete</a>
             </td>
         </tr>
 }
