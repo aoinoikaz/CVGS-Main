@@ -7,7 +7,7 @@
 
 <h1>Your Cart</h1>
 
-@if (Model.LineItems.Count == 0)
+@if (Model.LineItems == null || (Model.LineItems.Count == 0 && Model.LineItems != null))
 {
     <p>No items in the cart, lets add some <a asp-action="Index" asp-controller="Store">Back to store!</a></p>
 }
