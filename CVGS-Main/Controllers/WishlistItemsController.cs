@@ -27,13 +27,26 @@ namespace CVGS_Main.Controllers
 
 
         // GET: WishlistItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? id)
         {
-            // create A VIEW model encapsulating games and associating it to a wishlist
+            var myself = await _userManager.GetUserAsync(User);
 
-            // return the view model
-
-              return View(await _context.CvgsWishlistItems.ToListAsync());
+            if (id == null)
+            {
+                TempData["WishlistUser"] = "Your wishlist";
+                ViewData["Ownership"] = true;
+                var wishList = _context.CvgsWishlistItems.Where(w => w.UserId == myself.Id);
+                return View(await wishList.ToListAsync());
+            }
+            else
+            {
+                var friend = await _userManager.FindByIdAsync(id);
+                TempData["WishlistUser"] = friend.UserName + "'s wishlist";
+                ViewData["Ownership"] = false;
+                var wishList = _context.CvgsWishlistItems.Where(w => w.UserId == id);
+                return View(await wishList.ToListAsync());
+            }
+          
         }
 
         // GET: WishlistItems/Details/5

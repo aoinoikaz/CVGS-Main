@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Your Wishlist</h1>
+<h1>@TempData["WishlistUser"]</h1>
 
 <table class="table">
     <thead>
@@ -19,20 +19,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GameId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
+@foreach (var item in Model) 
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GameId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        @if((bool)ViewData["Ownership"] == true)
+        {
             <td>
                 <a asp-action="Edit" asp-route-id="@item.WishlistItemId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.WishlistItemId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.WishlistItemId">Delete</a>
             </td>
-        </tr>
+        }
+    </tr>
 }
     </tbody>
 </table>
