@@ -12,7 +12,6 @@ using System.Data;
 
 namespace CVGS_Main.Controllers
 {
-    [Authorize(Roles = "Administrator")]
     public class EventController : Controller
     {
         private readonly CvgsDbContext _context;
@@ -25,8 +24,8 @@ namespace CVGS_Main.Controllers
         // GET: Event
         public async Task<IActionResult> Index()
         {
-            //return View(await _context.CvgsEvent.ToListAsync());
-            return RedirectToAction("Index", "Admin");
+            return View(await _context.CvgsEvent.ToListAsync());
+            //return View
         }
 
         // GET: Event/Details/5
@@ -47,7 +46,10 @@ namespace CVGS_Main.Controllers
             return View(cvgsEvent);
         }
 
+
+
         // GET: Event/Create
+        [Authorize(Roles ="Administrator")]
         public IActionResult Create()
         {
             return View();
@@ -56,6 +58,7 @@ namespace CVGS_Main.Controllers
         // POST: Event/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EventId,Name,Description,ScheduledTime")] CvgsEvent cvgsEvent)
@@ -70,6 +73,8 @@ namespace CVGS_Main.Controllers
         }
 
         // GET: Event/Edit/5
+
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.CvgsEvent == null)
@@ -90,6 +95,8 @@ namespace CVGS_Main.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+
         public async Task<IActionResult> Edit(int id, [Bind("EventId,Name,Description,ScheduledTime")] CvgsEvent cvgsEvent)
         {
             if (id != cvgsEvent.EventId)
@@ -121,6 +128,7 @@ namespace CVGS_Main.Controllers
         }
 
         // GET: Event/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.CvgsEvent == null)
@@ -141,6 +149,7 @@ namespace CVGS_Main.Controllers
         // POST: Event/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.CvgsEvent == null)
