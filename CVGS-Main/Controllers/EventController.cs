@@ -67,7 +67,8 @@ namespace CVGS_Main.Controllers
             {
                 _context.Add(cvgsEvent);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Admin");
             }
             return View(cvgsEvent);
         }
@@ -122,7 +123,7 @@ namespace CVGS_Main.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Admin");
             }
             return View(cvgsEvent);
         }
@@ -163,7 +164,7 @@ namespace CVGS_Main.Controllers
             }
             
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Admin");
         }
 
         private bool CvgsEventExists(int id)
