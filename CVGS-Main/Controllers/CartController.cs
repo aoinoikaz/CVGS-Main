@@ -31,16 +31,23 @@ namespace CVGS_Main.Controllers
             CvgsCartViewModel v = new CvgsCartViewModel();
 
             var user = await _userManager.GetUserAsync(User);
-      
-            var userCart = _context.CvgsCart.Where(c => c.UserId == user.Id);
+
+            var userCart = _context.CvgsCart.Where(c => c.UserId == user.Id).FirstOrDefault();
 
             List<CvgsLineItem> cartItems = null;
 
             if (userCart != null)
             {
-                v.CvgsCart = userCart.FirstOrDefault();
-                cartItems = _context.CvgsLineItem.Where(i => i.CartId == userCart.FirstOrDefault().CartId).ToList();
+                v.CvgsCart = userCart;
+                cartItems = _context.CvgsLineItem.Where(i => i.CartId == userCart.CartId).ToList();
                 v.LineItems = cartItems;
+            }
+            else
+            {
+                CvgsCart cart = new CvgsCart();
+                cart.UserId = user.Id;
+                _context.CvgsCart.Add(cart);
+                _context.SaveChanges();
             }
 
             return View(v);
@@ -64,28 +71,7 @@ namespace CVGS_Main.Controllers
 
             return View(cvgsCart);
         }
-
-        // GET: Cart/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Cart/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CartId,UserId")] CvgsCart cvgsCart)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(cvgsCart);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(cvgsCart);
-        }
+    
 
         public async Task<IActionResult> AddToCart(int? id)
         {
@@ -125,9 +111,11 @@ namespace CVGS_Main.Controllers
 
             _context.CvgsLineItem.Add(newItem);
             _context.SaveChanges();
-   
-            return RedirectToAction("Index");
 
+            TempData["AddItemToCartSuccess"] = "<div " +
+                "class=\"alert alert-success alert-dismissible\">Successfully added item to cart!</div>";
+   
+            return RedirectToAction("Index", "Store");
         }
 
         // GET: Cart/Edit/5
