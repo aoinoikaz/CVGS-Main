@@ -9,16 +9,19 @@ using CVGS_Main.Areas.Identity.Data;
 using CVGS_Main.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace CVGS_Main.Controllers
 {
     public class EventController : Controller
     {
         private readonly CvgsDbContext _context;
+        private readonly UserManager<CvgsUser> _userManager;
 
-        public EventController(CvgsDbContext context)
+        public EventController(CvgsDbContext context, UserManager<CvgsUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Event
@@ -72,6 +75,42 @@ namespace CVGS_Main.Controllers
             }
             return View(cvgsEvent);
         }
+
+
+        // POST: Event/Register
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        public async Task<IActionResult> Register(int? id)
+        {
+
+
+            //find record with passed event id
+            //create new eventrej object 
+            CvgsEvent? eventUpcoming = _context.CvgsEvent.Find(id);
+            var user = await _userManager.GetUserAsync(User);
+
+            if (eventUpcoming == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                CvgsEventRegistration eventReg = new CvgsEventRegistration();
+                eventReg.EventId = eventUpcoming.EventId;
+                eventReg.UserId = user.Id;
+
+                _context.CvgsEventRegistration.Add(eventReg);
+                _context.SaveChanges();
+
+                TempData["AddItemToCartSuccess"] = "<div " +
+                    "class=\"alert alert-success alert-dismissible\">Successfully registered to event!</div>";
+
+                return RedirectToAction("Index", "Event");
+            }
+
+            
+        }
+
 
         // GET: Event/Edit/5
 

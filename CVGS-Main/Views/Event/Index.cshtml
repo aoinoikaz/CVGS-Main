@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@Html.Raw(TempData["AddItemToCartSuccess"])
 <h1>Upcoming events</h1>
 
 <table class="table">
@@ -23,6 +23,9 @@
         </tr>
     </thead>
     <tbody>
+
+        
+
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -35,9 +38,8 @@
                 @Html.DisplayFor(modelItem => item.ScheduledTime)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EventId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
+
+                <a asp-action="Register" asp-route-id="@item.EventId">Register</a>
             </td>
         </tr>
 }

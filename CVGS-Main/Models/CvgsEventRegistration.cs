@@ -8,10 +8,8 @@ namespace CVGS_Main.Models
         [Key]
         public int RegistrationId { get; set; }
 
-        public virtual CvgsEvent CvgsEvent { get; set; }
         public int EventId { get; set; }
 
-        public virtual CvgsUser CvgsUser {get; set;}
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }
