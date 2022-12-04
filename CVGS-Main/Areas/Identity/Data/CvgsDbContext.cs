@@ -20,6 +20,8 @@ public class CvgsDbContext : IdentityDbContext<CvgsUser>
     public virtual DbSet<CvgsReview> CvgsReviews { get; set; }
     public virtual DbSet<CvgsLineItem> CvgsLineItem { get; set; }
     public virtual DbSet<CvgsCart> CvgsCart { get; set; }
+    public virtual DbSet<CvgsFriendList> CvgsFriendList { get; set; }
+    public virtual DbSet<CvgsFriend> CvgsFriends { get; set; }
 
     public CvgsDbContext(DbContextOptions<CvgsDbContext> options)
         : base(options)
@@ -160,7 +162,6 @@ public class CvgsDbContext : IdentityDbContext<CvgsUser>
             Name = "Xbox",
         });
     }
-
 }
 
 public class CvgsUserEntityConfiguration : IEntityTypeConfiguration<CvgsUser>

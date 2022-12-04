@@ -9,9 +9,11 @@ using CVGS_Main.Areas.Identity.Data;
 using CVGS_Main.Models;
 using Microsoft.AspNetCore.Identity;
 using CVGS_Main.Areas.Identity.Pages.Account.Manage;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CVGS_Main.Controllers
 {
+    [Authorize]
     public class WishlistItemsController : Controller
     {
         private readonly CvgsDbContext _context;
