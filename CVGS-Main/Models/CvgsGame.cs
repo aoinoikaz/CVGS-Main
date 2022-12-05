@@ -25,5 +25,7 @@ namespace CVGS_Main.Models
         [DisplayName("Total Likes")]
         public float OverallScore { get; set; }
 
+        public float Price { get; set; }
+
     }
 }
